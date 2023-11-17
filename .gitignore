@@ -1,0 +1,4 @@
+.terraform/
+python/hello-python.zip
+.terraform.lock.hcl
+main.tfplan
