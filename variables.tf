@@ -9,6 +9,11 @@ variable "accountId" {
   type        = string
 }
 
+variable "lambda_function_name" {
+  description = "Lambda Function Name"
+  type        = string
+}
+
 variable "endpoint_path" {
   description = "The Get Endpoint Path"
   type        = string

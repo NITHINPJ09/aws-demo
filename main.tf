@@ -109,11 +109,15 @@ resource "aws_iam_role_policy_attachment" "attach_iam_policy_to_iam_role" {
   policy_arn = aws_iam_policy.iam_policy_for_lambda.arn
 }
 
+resource "aws_cloudwatch_log_group" "example" {
+  name              = "/aws/lambda/${var.lambda_function_name}"
+  retention_in_days = 14
+}
 
 # Create a lambda function
 # In terraform ${path.module} is the current directory.
 resource "aws_lambda_function" "terraform_lambda_func" {
-  function_name    = "Demo-Lambda-Function"
+  function_name    = var.lambda_function_name
   role             = aws_iam_role.lambda_role.arn
   handler          = "hello-python.lambda_handler"
   runtime          = "python3.8"
@@ -125,7 +129,7 @@ resource "aws_lambda_function" "terraform_lambda_func" {
       S3_BUCKET_NAME = aws_s3_bucket.lambda_bucket.id
     }
   }
-  depends_on = [aws_iam_role_policy_attachment.attach_iam_policy_to_iam_role, aws_s3_object.lambda_hello]
+  depends_on = [aws_iam_role_policy_attachment.attach_iam_policy_to_iam_role, aws_s3_object.lambda_hello, aws_cloudwatch_log_group.example]
 }
 
 resource "aws_api_gateway_rest_api" "example_api" {
