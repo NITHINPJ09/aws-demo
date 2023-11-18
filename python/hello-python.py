@@ -3,7 +3,7 @@ import os
 import boto3
 
 def lambda_handler(event, context):
-    message = 'Hi {} !'.format(event['queryStringParameters']['name'])
+    message = 'Hi {}, Good Morning!'.format(event['queryStringParameters']['name'])
     # Retrieve the bucket name from the environment variable
     bucket_name = os.environ.get('S3_BUCKET_NAME')
 
