@@ -60,7 +60,7 @@ resource "aws_s3_object" "lambda_hello" {
   source = data.archive_file.zip_the_python_code.output_path
 
   etag       = filemd5(data.archive_file.zip_the_python_code.output_path)
-  depends_on = [aws_s3_bucket_public_access_block.lambda_bucket]
+  depends_on = [aws_s3_bucket_public_access_block.lambda_bucket, aws_s3_bucket_versioning.lambda_bucket]
 }
 
 resource "aws_iam_role" "lambda_role" {
