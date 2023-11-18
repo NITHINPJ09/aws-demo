@@ -27,8 +27,12 @@ resource "random_pet" "lambda_bucket_name" {
 resource "aws_s3_bucket" "lambda_bucket" {
   bucket        = random_pet.lambda_bucket_name.id
   force_destroy = true
-  versioning {
-    enabled = true
+}
+
+resource "aws_s3_bucket_versioning" "lambda_bucket" {
+  bucket = aws_s3_bucket.lambda_bucket.id
+  versioning_configuration {
+    status = "Enabled"
   }
 }
 
